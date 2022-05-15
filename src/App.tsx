@@ -18,6 +18,7 @@ function App() {
         const dataUrl = await domtoimage.toPng(area.current as any);
         setLoading(false);
         saveAs(dataUrl, `playerify-${DataSelected?.trackId}.png`);
+        window.location.reload()
     };
 
     return (
