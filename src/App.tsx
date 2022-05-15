@@ -49,6 +49,7 @@ function App() {
                 ) : (
                     ""
                 )}
+<div>แนะนำให้ใช้งานบน Application Google Chrome หรือ Google Chrome Desktop</div>
             </div>
         </div>
     );
