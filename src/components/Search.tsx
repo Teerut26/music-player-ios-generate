@@ -21,7 +21,8 @@ const Search: React.FC<Props> = ({ onSelect }) => {
     };
 
     useEffect(() => {
-        getData();
+        const timeOutId = setTimeout(() => getData(), 500);
+        return () => clearTimeout(timeOutId);
     }, [keyWord]);
 
     return (
