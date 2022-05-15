@@ -17,7 +17,7 @@ function App() {
         setLoading(true);
         const dataUrl = await domtoimage.toPng(area.current as any);
         setLoading(false);
-        saveAs(dataUrl, `ophtusify-${DataSelected?.trackId}.png`);
+        saveAs(dataUrl, `playerify-${DataSelected?.trackId}.png`);
     };
 
     return (
