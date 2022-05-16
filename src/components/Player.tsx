@@ -36,10 +36,7 @@ const Player: React.FC<Props> = ({ Data }) => {
 
     return (
         <div className="flex flex-col items-center">
-            <div
-                ref={area}
-                className="p-10 bg-white "
-            >
+            <div ref={area} className="p-10 bg-white ">
                 <div className="w-[585px] h-[1007px] border-2 flex flex-col gap-5 items-center p-10 rounded-[3rem] bg-[#F6F6F6]">
                     <div>
                         <img
@@ -93,9 +90,12 @@ const Player: React.FC<Props> = ({ Data }) => {
                                 <div
                                     style={{
                                         width:
-                                            moment
-                                                .utc(Data.trackTimeMillis)
-                                                .seconds() + "%",
+                                            (27 *
+                                                moment
+                                                    .utc(Data.trackTimeMillis)
+                                                    .seconds()) /
+                                                100 +
+                                            "%",
                                     }}
                                     className={`bg-black  h-2`}
                                 ></div>
