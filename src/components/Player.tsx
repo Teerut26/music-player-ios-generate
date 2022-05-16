@@ -2,6 +2,7 @@ import saveAs from "file-saver";
 import domtoimage from "dom-to-image";
 import React, { useEffect, useRef, useState } from "react";
 import { Result } from "../interfaces/response";
+import { copyImageToClipboard } from "copy-image-clipboard";
 
 interface Props {
     Data: Result;
@@ -10,6 +11,8 @@ interface Props {
 const Player: React.FC<Props> = ({ Data }) => {
     const area = useRef<HTMLDivElement>(null);
     const [Loading, setLoading] = useState<boolean>(false);
+    const [clipboardBtnLoading, setclipboardBtnLoading] =
+        useState<boolean>(false);
 
     const handleDownload = async () => {
         setLoading(true);
@@ -18,9 +21,21 @@ const Player: React.FC<Props> = ({ Data }) => {
         saveAs(dataUrl, `playerify-${Data?.trackId}.png`);
     };
 
+    const copyToClipboard = async () => {
+        setclipboardBtnLoading(true);
+        const dataUrl = await domtoimage.toPng(area.current as any);
+        let img = new Image();
+        img.src = dataUrl;
+        await copyImageToClipboard(img.src);
+        setclipboardBtnLoading(false);
+    };
+
     return (
         <div className="flex flex-col items-center">
-            <div ref={area} className="p-10 bg-white mt-[-18rem] sm:mt-[-4rem] md:mt-[0rem]">
+            <div
+                ref={area}
+                className="p-10 bg-white mt-[-18rem] sm:mt-[-4rem] md:mt-[0rem]"
+            >
                 <div className="w-[585px] h-[1007px] border-2 flex flex-col gap-5 items-center p-10 rounded-[3rem] bg-[#F6F6F6]">
                     <div>
                         <img
@@ -145,11 +160,19 @@ const Player: React.FC<Props> = ({ Data }) => {
                     </div>
                 </div>
             </div>
-            <div
-                className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-2 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center"
-                onClick={() => handleDownload()}
-            >
-                {Loading ? "Loading..." : "Download"}
+            <div className="flex flex-col w-full gap-2">
+                <div
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-2 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center"
+                    onClick={() => handleDownload()}
+                >
+                    {Loading ? "Loading..." : "Download"}
+                </div>
+                <div
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-2 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center"
+                    onClick={() => copyToClipboard()}
+                >
+                    {clipboardBtnLoading ? "Loading..." : "Copy"}
+                </div>
             </div>
         </div>
     );
