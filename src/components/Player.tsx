@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Result } from "../interfaces/response";
 import { copyImageToClipboard } from "copy-image-clipboard";
 import SelectDevices from "./SelectDevices";
+import moment from "moment";
 
 interface Props {
     Data: Result;
@@ -37,7 +38,7 @@ const Player: React.FC<Props> = ({ Data }) => {
         <div className="flex flex-col items-center">
             <div
                 ref={area}
-                className="p-10 bg-white mt-[-18rem] sm:mt-[-4rem] md:mt-[0rem]"
+                className="p-10 bg-white "
             >
                 <div className="w-[585px] h-[1007px] border-2 flex flex-col gap-5 items-center p-10 rounded-[3rem] bg-[#F6F6F6]">
                     <div>
@@ -89,12 +90,26 @@ const Player: React.FC<Props> = ({ Data }) => {
                         </div>
                         <div className="relative mt-5">
                             <div className="bg-[#A4A4A4] border-0 rounded-full overflow-hidden">
-                                <div className="bg-black w-[14.4%] h-2"></div>
+                                <div
+                                    style={{
+                                        width:
+                                            moment
+                                                .utc(Data.trackTimeMillis)
+                                                .seconds() + "%",
+                                    }}
+                                    className={`bg-black  h-2`}
+                                ></div>
                             </div>
                         </div>
                         <div className="flex justify-between font-semibold mt-2 text-[22px] text-[#A8A8A8]">
                             <div>0:27</div>
-                            <div>-3:07</div>
+                            <div>
+                                -
+                                {moment
+                                    .utc(Data.trackTimeMillis)
+                                    .subtract(27, "seconds")
+                                    .format("m:ss")}
+                            </div>
                         </div>
                         <div className="flex justify-between px-[5rem] items-center py-[1.5rem] mb-2">
                             <svg
