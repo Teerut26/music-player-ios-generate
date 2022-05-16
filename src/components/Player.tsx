@@ -5,6 +5,7 @@ import { Result } from "../interfaces/response";
 import { copyImageToClipboard } from "copy-image-clipboard";
 import SelectDevices from "./SelectDevices";
 import moment from "moment";
+import MusicPreview from "./MusicPreview";
 
 interface Props {
     Data: Result;
@@ -89,7 +90,11 @@ const Player: React.FC<Props> = ({ Data }) => {
                             <div className="bg-[#A4A4A4] border-0 rounded-full overflow-hidden">
                                 <div
                                     style={{
-                                        width:(( 27 * 100) / (Data.trackTimeMillis as number * 0.001)) + "%",
+                                        width:
+                                            (27 * 100) /
+                                                ((Data.trackTimeMillis as number) *
+                                                    0.001) +
+                                            "%",
                                     }}
                                     className={`bg-black  h-2`}
                                 ></div>
@@ -164,16 +169,13 @@ const Player: React.FC<Props> = ({ Data }) => {
                                 />
                             </svg>
                         </div>
-                        {/* <div className="relative mt-3">
-                    <div className="bg-[#A4A4A4] border-0 rounded-full overflow-hidden">
-                        <div className="bg-black w-[14.4%] h-2"></div>
-                    </div>
-                </div> */}
                     </div>
                 </div>
             </div>
             <div className="flex flex-col w-full gap-2 max-w-[585px] mx-auto ">
                 <SelectDevices onChange={(v) => setDevices(v)} />
+                <MusicPreview url={Data.previewUrl} />
+
                 <div
                     className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full flex justify-center sm:text-xl text-2xl"
                     onClick={() => handleDownload()}
