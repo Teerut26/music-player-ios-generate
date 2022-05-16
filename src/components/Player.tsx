@@ -89,13 +89,7 @@ const Player: React.FC<Props> = ({ Data }) => {
                             <div className="bg-[#A4A4A4] border-0 rounded-full overflow-hidden">
                                 <div
                                     style={{
-                                        width:
-                                            (27 *
-                                                moment
-                                                    .utc(Data.trackTimeMillis)
-                                                    .seconds()) /
-                                                100 +
-                                            "%",
+                                        width:(( 27 * 100) / (Data.trackTimeMillis as number * 0.001)) + "%",
                                     }}
                                     className={`bg-black  h-2`}
                                 ></div>
