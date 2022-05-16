@@ -162,13 +162,13 @@ const Player: React.FC<Props> = ({ Data }) => {
             </div>
             <div className="flex flex-col w-full gap-2">
                 <div
-                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-2 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center"
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center sm:text-xl text-2xl"
                     onClick={() => handleDownload()}
                 >
                     {Loading ? "Loading..." : "Download"}
                 </div>
                 <div
-                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-2 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center"
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center sm:text-xl text-2xl"
                     onClick={() => copyToClipboard()}
                 >
                     {clipboardBtnLoading ? "Loading..." : "Copy"}
