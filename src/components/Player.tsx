@@ -3,6 +3,7 @@ import domtoimage from "dom-to-image";
 import React, { useEffect, useRef, useState } from "react";
 import { Result } from "../interfaces/response";
 import { copyImageToClipboard } from "copy-image-clipboard";
+import SelectDevices from "./SelectDevices";
 
 interface Props {
     Data: Result;
@@ -13,6 +14,8 @@ const Player: React.FC<Props> = ({ Data }) => {
     const [Loading, setLoading] = useState<boolean>(false);
     const [clipboardBtnLoading, setclipboardBtnLoading] =
         useState<boolean>(false);
+
+    const [Devices, setDevices] = useState<string>("iPhone");
 
     const handleDownload = async () => {
         setLoading(true);
@@ -49,7 +52,7 @@ const Player: React.FC<Props> = ({ Data }) => {
                     </div>
                     <div className="flex flex-col w-full">
                         <div className="self-start w-full text-[#898989] text-[22px] mt-[20px] font-semibold">
-                            iPhone
+                            {Devices}
                         </div>
                         <div className="self-start w-full flex relative">
                             <div className=" text-black text-[37px] font-semibold truncate w-[78%]">
@@ -160,15 +163,16 @@ const Player: React.FC<Props> = ({ Data }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col w-full gap-2">
+            <div className="flex flex-col w-full gap-2 max-w-[585px] mx-auto ">
+                <SelectDevices onChange={(v) => setDevices(v)} />
                 <div
-                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center sm:text-xl text-2xl"
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full flex justify-center sm:text-xl text-2xl"
                     onClick={() => handleDownload()}
                 >
                     {Loading ? "Loading..." : "Download"}
                 </div>
                 <div
-                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full max-w-[585px] mx-auto flex justify-center sm:text-xl text-2xl"
+                    className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full flex justify-center sm:text-xl text-2xl"
                     onClick={() => copyToClipboard()}
                 >
                     {clipboardBtnLoading ? "Loading..." : "Copy"}
