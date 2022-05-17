@@ -32,6 +32,7 @@ const Player: React.FC<Props> = ({ Data }) => {
         let img = new Image();
         img.src = dataUrl;
         await copyImageToClipboard(img.src);
+        img.remove()
         setclipboardBtnLoading(false);
     };
 

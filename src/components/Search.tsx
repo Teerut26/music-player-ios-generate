@@ -12,6 +12,7 @@ const Search: React.FC<Props> = ({ onSelect }) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const getData = async () => {
+        if (keyWord.length === 0) return
         setLoading(true);
         let { data } = await axios.get<Response>(
             `https://itunes.apple.com/search?term=${keyWord}&limit=20&kind=song`
