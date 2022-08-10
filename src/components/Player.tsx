@@ -6,6 +6,7 @@ import { copyImageToClipboard } from "copy-image-clipboard";
 import SelectDevices from "./SelectDevices";
 import moment from "moment";
 import MusicPreview from "./MusicPreview";
+import { Slider } from "@mui/material";
 
 interface Props {
     Data: Result;
@@ -18,10 +19,19 @@ const Player: React.FC<Props> = ({ Data }) => {
         useState<boolean>(false);
 
     const [Devices, setDevices] = useState<string>("iPhone");
+    const [scale, setScale] = useState(1);
 
     const handleDownload = async () => {
         setLoading(true);
-        const dataUrl = await domtoimage.toPng(area.current as any);
+        // const dataUrl = await domtoimage.toPng(area.current as any);
+        const dataUrl = await domtoimage.toPng(area.current as any, {
+            width: area.current?.clientWidth! * scale,
+            height: area.current?.clientHeight! * scale,
+            style: {
+                transform: "scale(" + scale + ")",
+                transformOrigin: "top left",
+            },
+        });
         setLoading(false);
         saveAs(dataUrl, `playerify-${Data?.trackId}.png`);
     };
@@ -32,7 +42,7 @@ const Player: React.FC<Props> = ({ Data }) => {
         let img = new Image();
         img.src = dataUrl;
         await copyImageToClipboard(img.src);
-        img.remove()
+        img.remove();
         setclipboardBtnLoading(false);
     };
 
@@ -175,8 +185,16 @@ const Player: React.FC<Props> = ({ Data }) => {
             </div>
             <div className="flex flex-col w-full gap-2 max-w-[585px] mx-auto ">
                 <SelectDevices onChange={(v) => setDevices(v)} />
+                <Slider
+                    onChange={(v:any) => setScale(v.target?.value)}
+                    defaultValue={1}
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks
+                    min={1}
+                    max={10}
+                />
                 <MusicPreview url={Data.previewUrl} />
-
                 <div
                     className="bg-[#007AFF] hover:bg-[#007AFF]/80 cursor-pointer select-none text-white px-3 py-5 rounded-[0.8rem] font-semibold w-full flex justify-center sm:text-xl text-2xl"
                     onClick={() => handleDownload()}
